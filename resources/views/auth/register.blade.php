@@ -1,8 +1,14 @@
-@extends('layout.user.app')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register | Creator</title>
 
-@section('title', 'Register')
+    {{-- Tailwind via Vite (no CDN) --}}
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body>
 
-@section('content')
 <div class="min-h-screen flex items-center justify-center overflow-hidden
             bg-gradient-to-br from-sky-100 via-sky-50 to-white">
 
@@ -102,4 +108,6 @@
 
     </div>
 </div>
-@endsection
+
+</body>
+</html>
