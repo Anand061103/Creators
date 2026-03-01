@@ -16,19 +16,60 @@
             Creator
         </div>
 
-        <nav class="p-4 space-y-2">
-            <a href="{{ route('user.dashboard') }}" class="block px-4 py-2 rounded-lg bg-indigo-50 text-indigo-600">
-                Dashboard
-            </a>
+       <nav class="p-4 space-y-2">
 
-            <a href="{{ route('user.wallet.index') }}" class="block px-4 py-2 rounded-lg text-gray-700 hover:bg-indigo-50">
-                Wallet
-            </a>
+    <!-- Dashboard -->
+    <a href="{{ route('user.dashboard') }}"
+       class="block px-4 py-2 rounded-lg
+       {{ request()->routeIs('user.dashboard')
+            ? 'bg-gray-200 text-gray-800'
+            : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }}">
+        Dashboard
+    </a>
+    <a href="{{ route('user.tasks.index') }}"
+       class="block px-4 py-2 rounded-lg
+       {{ request()->routeIs('user.tasks.index')
+            ? 'bg-gray-200 text-gray-800'
+            : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }}">
+        Tasks
+    </a>
 
-            <a href="#" class="block px-4 py-2 rounded-lg text-gray-700 hover:bg-indigo-50">
-                Profile
-            </a>
-        </nav>
+    <!-- Wallet -->
+    <a href="{{ route('user.wallet.index') }}"
+       class="block px-4 py-2 rounded-lg
+       {{ request()->routeIs('user.wallet.*')
+            ? 'bg-indigo-50 text-indigo-600'
+            : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }}">
+        Wallet
+    </a>
+
+    <!-- Kyc -->
+    <a href="{{ route('user.kyc.index') }}"
+       class="block px-4 py-2 rounded-lg
+       {{ request()->routeIs('user.kyc.*')
+            ? 'bg-indigo-50 text-indigo-600'
+            : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }}">
+        KYC
+    </a>
+    <!-- Withdraw -->
+    <a href="{{ route('user.withdraw.index') }}"
+       class="block px-4 py-2 rounded-lg
+       {{ request()->routeIs('user.withdraw.*')
+            ? 'bg-indigo-50 text-indigo-600'
+            : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }}">
+        Withdraw
+    </a>
+
+    <!-- Profile -->
+    <a href="{{ route('user.profile.index') }}"
+       class="block px-4 py-2 rounded-lg
+       {{ request()->routeIs('user.profile.index')
+            ? 'bg-indigo-50 text-indigo-600'
+            : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }}">
+        Profile
+    </a>
+
+</nav>
     </aside>
 
     <!-- RIGHT CONTENT -->

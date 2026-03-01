@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Kyc extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'document_type',
+        'document_number',
+        'document_front',
+        'document_back',
+        'status',
+    ];
+}
