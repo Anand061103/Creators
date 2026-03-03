@@ -3,17 +3,31 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\Wallet;
+use App\Models\Transaction;
+use App\Models\PaymentMethod;
+use App\Models\User;
 
 class WalletController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+   public function index() 
     {
-        // future: show wallet
-        return view('user.wallet.index');
+        $user = Auth::user();
+
+        $wallet = $user->wallet;
+        $transactions = $user->transactions()->latest()->paginate(10);
+        $paymentMethods = $user->paymentMethods;
+
+        return view('user.wallet.index', compact(
+            'wallet',
+            'transactions',
+            'paymentMethods'
+        ));
     }
 
 

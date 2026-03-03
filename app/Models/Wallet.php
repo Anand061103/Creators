@@ -8,25 +8,15 @@ use App\Models\User as MainUser;
 
 class Wallet extends Model
 {
-    use HasFactory;
-
-    protected $table = 'wallets';
-
     protected $fillable = [
         'user_id',
         'balance',
-        'status',
-        'currency',
+        'total_earned',
+        'total_withdrawn'
     ];
-
-    /*
-    |--------------------------------------------------------------------------
-    | Relationships
-    |--------------------------------------------------------------------------
-    */
 
     public function user()
     {
-        return $this->belongsTo(MainUser::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 }

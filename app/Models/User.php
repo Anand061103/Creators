@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use App\Models\Wallet;
+
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -45,4 +47,30 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+        public function wallet()
+        {
+            return $this->hasOne(Wallet::class);
+        }
+
+        public function transactions()
+        {
+            return $this->hasMany(Transaction::class);
+        }
+
+        public function paymentMethods()
+        {
+            return $this->hasMany(PaymentMethod::class);
+        }
+ 
+protected static function booted()
+{
+    static::created(function ($user) {
+        Wallet::create([
+            'user_id' => $user->id,
+            'balance' => 0,
+            'total_earned' => 0,
+            'total_withdrawn' => 0
+        ]);
+    });
+}
 }

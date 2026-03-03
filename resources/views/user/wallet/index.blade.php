@@ -1,3 +1,19 @@
+@php
+$today = $transactions->where('type','credit')
+    ->where('created_at','>=', now()->startOfDay())
+    ->sum('amount');
+
+$week = $transactions->where('type','credit')
+    ->where('created_at','>=', now()->startOfWeek())
+    ->sum('amount');
+
+$month = $transactions->where('type','credit')
+    ->where('created_at','>=', now()->startOfMonth())
+    ->sum('amount');
+
+$pending = $transactions->where('status','pending')->sum('amount');
+@endphp
+
 @extends('layout.user.app')
 
 @section('title', 'My Wallet')
@@ -31,7 +47,7 @@
                     </div>
                     
                     <div class="mb-6">
-                        <h2 class="text-5xl font-black text-white mb-2">₹1,245.50</h2>
+                        <h2 class="text-5xl font-black text-white mb-2">₹{{ number_format($wallet->balance ?? 0, 2) }}</h2>
                         <div class="flex items-center gap-2">
                             <div class="bg-green-500/30 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1 border border-green-400/50">
                                 <svg class="w-4 h-4 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -75,7 +91,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
                             </svg>
                         </div>
-                        <p class="text-2xl font-black text-white">₹5,420</p>
+                        <p class="text-2xl font-black text-white">₹{{ number_format($wallet->total_earned ?? 0, 2) }}</p>
                     </div>
                     
                     <div class="bg-white/20 backdrop-blur-sm rounded-2xl p-4 border border-white/30">
@@ -85,7 +101,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/>
                             </svg>
                         </div>
-                        <p class="text-2xl font-black text-white">₹4,175</p>
+                        <p class="text-2xl font-black text-white">₹{{ number_format($wallet->total_withdrawn ?? 0, 2) }}</p>
                     </div>
                 </div>
             </div>
@@ -103,7 +119,7 @@
                 </div>
             </div>
             <p class="text-gray-500 text-sm font-semibold mb-1">Today's Earnings</p>
-            <p class="text-2xl font-black text-gray-900">₹120</p>
+            <p class="text-2xl font-black text-gray-900">₹{{ number_format($today, 2) }}</p>
         </div>
 
         <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-5">
@@ -115,7 +131,7 @@
                 </div>
             </div>
             <p class="text-gray-500 text-sm font-semibold mb-1">This Week</p>
-            <p class="text-2xl font-black text-gray-900">₹680</p>
+            <p class="text-2xl font-black text-gray-900">₹{{ number_format($week, 2) }}</p>
         </div>
 
         <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-5">
@@ -127,7 +143,7 @@
                 </div>
             </div>
             <p class="text-gray-500 text-sm font-semibold mb-1">This Month</p>
-            <p class="text-2xl font-black text-gray-900">₹2,450</p>
+            <p class="text-2xl font-black text-gray-900">₹{{ number_format($month, 2) }}</p>
         </div>
 
         <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-5">
@@ -139,198 +155,94 @@
                 </div>
             </div>
             <p class="text-gray-500 text-sm font-semibold mb-1">Pending</p>
-            <p class="text-2xl font-black text-gray-900">₹350</p>
+            <p class="text-2xl font-black text-gray-900">₹{{ number_format($pending, 2) }}</p>
         </div>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         <!-- Transaction History -->
-        <div class="lg:col-span-2 bg-white rounded-2xl shadow-lg border border-gray-200">
-            <div class="p-6 border-b border-gray-200">
-                <div class="flex items-center justify-between">
-                    <h3 class="text-xl font-black text-gray-900">Transaction History</h3>
-                    <div class="flex gap-2">
-                        <button class="px-4 py-2 text-sm font-bold text-blue-600 bg-blue-50 rounded-xl hover:bg-blue-100 transition-all">
-                            All
-                        </button>
-                        <button class="px-4 py-2 text-sm font-bold text-gray-600 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all">
-                            Credit
-                        </button>
-                        <button class="px-4 py-2 text-sm font-bold text-gray-600 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all">
-                            Debit
-                        </button>
-                    </div>
-                </div>
-            </div>
+                    <div class="p-6 space-y-4">
+            @forelse($transactions as $transaction)
 
-            <div class="p-6 space-y-4">
-                
-                <!-- Transaction 1 -->
-                <div class="flex items-center gap-4 p-4 bg-green-50 rounded-xl border border-green-200 hover:shadow-md transition-all">
-                    <div class="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                        </svg>
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <p class="font-bold text-gray-900">YouTube Task Completed</p>
-                        <p class="text-sm text-gray-500">Subscribe to Tech Channel</p>
-                    </div>
-                    <div class="text-right flex-shrink-0">
-                        <p class="text-lg font-black text-green-600">+₹15</p>
-                        <p class="text-xs text-gray-500">Today, 2:30 PM</p>
-                    </div>
-                </div>
+            @php
+            $isCredit = $transaction->type === 'credit';
+            @endphp
 
-                <!-- Transaction 2 -->
-                <div class="flex items-center gap-4 p-4 bg-green-50 rounded-xl border border-green-200 hover:shadow-md transition-all">
-                    <div class="w-12 h-12 bg-pink-500 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                        </svg>
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <p class="font-bold text-gray-900">Instagram Follow Task</p>
-                        <p class="text-sm text-gray-500">Follow Business Page</p>
-                    </div>
-                    <div class="text-right flex-shrink-0">
-                        <p class="text-lg font-black text-green-600">+₹8</p>
-                        <p class="text-xs text-gray-500">Today, 11:15 AM</p>
-                    </div>
-                </div>
+            <div class="flex items-center gap-4 p-4 
+                {{ $isCredit ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200' }} 
+                rounded-xl border hover:shadow-md transition-all">
 
-                <!-- Transaction 3 -->
-                <div class="flex items-center gap-4 p-4 bg-blue-50 rounded-xl border border-blue-200 hover:shadow-md transition-all">
-                    <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                        </svg>
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <p class="font-bold text-gray-900">Facebook Task Reward</p>
-                        <p class="text-sm text-gray-500">Like Page & Posts</p>
-                    </div>
-                    <div class="text-right flex-shrink-0">
-                        <p class="text-lg font-black text-green-600">+₹6</p>
-                        <p class="text-xs text-gray-500">Yesterday, 5:45 PM</p>
-                    </div>
-                </div>
+                <div class="w-12 h-12 
+                    {{ $isCredit ? 'bg-green-500' : 'bg-red-500' }} 
+                    rounded-xl flex items-center justify-center flex-shrink-0">
 
-                <!-- Transaction 4 -->
-                <div class="flex items-center gap-4 p-4 bg-red-50 rounded-xl border border-red-200 hover:shadow-md transition-all">
-                    <div class="w-12 h-12 bg-red-500 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
-                        </svg>
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <p class="font-bold text-gray-900">Withdrawal to UPI</p>
-                        <p class="text-sm text-gray-500">Success • johndoe@upi</p>
-                    </div>
-                    <div class="text-right flex-shrink-0">
-                        <p class="text-lg font-black text-red-600">-₹500</p>
-                        <p class="text-xs text-gray-500">Feb 28, 3:20 PM</p>
-                    </div>
-                </div>
-
-                <!-- Transaction 5 -->
-                <div class="flex items-center gap-4 p-4 bg-green-50 rounded-xl border border-green-200 hover:shadow-md transition-all">
-                    <div class="w-12 h-12 bg-sky-500 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                        </svg>
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <p class="font-bold text-gray-900">Twitter Engagement</p>
-                        <p class="text-sm text-gray-500">Retweet & Like Task</p>
-                    </div>
-                    <div class="text-right flex-shrink-0">
-                        <p class="text-lg font-black text-green-600">+₹7</p>
-                        <p class="text-xs text-gray-500">Feb 27, 9:30 AM</p>
-                    </div>
-                </div>
-
-                <!-- Transaction 6 -->
-                <div class="flex items-center gap-4 p-4 bg-green-50 rounded-xl border border-green-200 hover:shadow-md transition-all">
-                    <div class="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                        </svg>
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <p class="font-bold text-gray-900">Referral Bonus</p>
-                        <p class="text-sm text-gray-500">Friend Joined via Your Link</p>
-                    </div>
-                    <div class="text-right flex-shrink-0">
-                        <p class="text-lg font-black text-green-600">+₹50</p>
-                        <p class="text-xs text-gray-500">Feb 26, 1:00 PM</p>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="p-6 border-t border-gray-200 text-center">
-                <button class="text-blue-600 font-bold text-sm hover:text-blue-700 transition-colors inline-flex items-center gap-2">
-                    View All Transactions
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="{{ $isCredit ? 'M12 4v16m8-8H4' : 'M20 12H4' }}"/>
                     </svg>
-                </button>
+                </div>
+
+                <div class="flex-1 min-w-0">
+                    <p class="font-bold text-gray-900">{{ $transaction->title }}</p>
+                    <p class="text-sm text-gray-500">{{ $transaction->description }}</p>
+                </div>
+
+                <div class="text-right flex-shrink-0">
+                    <p class="text-lg font-black 
+                        {{ $isCredit ? 'text-green-600' : 'text-red-600' }}">
+                        {{ $isCredit ? '+' : '-' }}₹{{ number_format($transaction->amount,2) }}
+                    </p>
+                    <p class="text-xs text-gray-500">
+                        {{ $transaction->created_at->format('M d, Y h:i A') }}
+                    </p>
+                </div>
             </div>
-        </div>
+
+            @empty
+            <p class="text-center text-gray-500">No transactions found.</p>
+            @endforelse
+            </div>
 
         <!-- Sidebar -->
         <div class="space-y-6">
             
             <!-- Payment Methods -->
-            <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
-                <h3 class="text-lg font-black text-gray-900 mb-4">Payment Methods</h3>
-                
-                <div class="space-y-3">
-                    <div class="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border-2 border-blue-200">
-                        <div class="flex items-center justify-between mb-2">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-                                    <span class="text-white font-bold text-sm">UPI</span>
-                                </div>
-                                <div>
-                                    <p class="font-bold text-gray-900 text-sm">UPI ID</p>
-                                    <p class="text-xs text-gray-500">johndoe@upi</p>
-                                </div>
-                            </div>
-                            <div class="bg-green-500 w-6 h-6 rounded-full flex items-center justify-center">
-                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                                </svg>
-                            </div>
+           @forelse($paymentMethods as $method)
+
+            <div class="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border-2 border-blue-200">
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">
+                                {{ strtoupper($method->type) }}
+                            </span>
+                        </div>
+                        <div>
+                            <p class="font-bold text-gray-900 text-sm">
+                                {{ ucfirst($method->type) }}
+                            </p>
+                            <p class="text-xs text-gray-500">
+                                {{ $method->upi_id ?? $method->account_number ?? 'N/A' }}
+                            </p>
                         </div>
                     </div>
 
-                    <div class="p-4 bg-gray-50 rounded-xl border-2 border-gray-200">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
-                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <p class="font-bold text-gray-900 text-sm">Bank Account</p>
-                                    <p class="text-xs text-gray-500">Not Added</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button class="w-full py-3 border-2 border-dashed border-gray-300 rounded-xl text-blue-600 font-bold text-sm hover:border-blue-500 hover:bg-blue-50 transition-all flex items-center justify-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                    @if($method->is_default)
+                    <div class="bg-green-500 w-6 h-6 rounded-full flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                clip-rule="evenodd"/>
                         </svg>
-                        Add Payment Method
-                    </button>
+                    </div>
+                    @endif
                 </div>
             </div>
+
+            @empty
+            <p class="text-gray-500 text-sm">No payment methods added.</p>
+            @endforelse
 
             <!-- Quick Stats -->
             <div class="bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl shadow-xl p-6 text-white">
@@ -391,4 +303,8 @@
 }
 </style>
 
+
+<div class="mt-6">
+    {{ $transactions->links() }}
+</div>
 @endsection

@@ -8,24 +8,14 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('wallets', function (Blueprint $table) {
-
-            $table->id();
-
-            // Relation
-            $table->foreignId('user_id')
-                  ->constrained()
-                  ->cascadeOnDelete();
-
-            // Wallet data
-            $table->decimal('balance', 12, 2)->default(0);
-            $table->enum('status', ['active', 'blocked'])->default('active');
-
-            // Optional (future use)
-            $table->string('currency', 10)->default('INR');
-
-            $table->timestamps();
-        });
+       Schema::create('wallets', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('user_id')->constrained()->onDelete('cascade');
+    $table->decimal('balance', 12, 2)->default(0);
+    $table->decimal('total_earned', 12, 2)->default(0);
+    $table->decimal('total_withdrawn', 12, 2)->default(0);
+    $table->timestamps();
+});
     }
 
     public function down(): void

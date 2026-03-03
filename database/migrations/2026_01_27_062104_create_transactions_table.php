@@ -8,23 +8,20 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('transactions', function (Blueprint $table) {
+       Schema::create('transactions', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('user_id')->constrained()->onDelete('cascade');
+    $table->string('title');
+    $table->text('description')->nullable();
 
-            $table->id();
+    $table->enum('type', ['credit', 'debit']);
+    $table->decimal('amount', 12, 2);
 
-            $table->foreignId('user_id')
-                  ->constrained('users')
-                  ->onDelete('cascade');
+    $table->string('reference')->nullable(); 
+    $table->string('status')->default('success'); // success, pending, failed
 
-            $table->decimal('amount', 10, 2);
-
-            $table->enum('type', ['credit', 'debit']);
-
-            $table->string('source', 100);
-
-            $table->timestamps(); // created_at + updated_at
-
-        });
+    $table->timestamps();
+});
     }
 
     public function down()

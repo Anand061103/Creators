@@ -33,8 +33,7 @@ Route::middleware(['auth'])->group(function () {
 Route::prefix('user')->name('user.')->group(function () {
 
     Route::get('/dashboard', function () { return view('user.dashboard.index'); })->name('dashboard');
-    Route::resource('wallet', WalletController::class);
-    Route::resource('tasks', TaskController::class);
+Route::resource('wallet', WalletController::class)->middleware('auth');    Route::resource('tasks', TaskController::class);
     Route::resource('profile', ProfileController::class);
     Route::resource('kyc', KycController::class);
     Route::resource('withdraw', WithdrawController::class);
