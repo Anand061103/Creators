@@ -12,6 +12,7 @@ use App\Http\Controllers\User\KycController;
 use App\Http\Controllers\User\TaskController;
 use App\Http\Controllers\User\WalletController;
 use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\User\SupportController;
 use App\Http\Controllers\User\WithdrawController;
 
 
@@ -36,22 +37,23 @@ Route::middleware(['auth'])->group(function () {
 Route::prefix('user')->name('user.')->group(function () {
 
     Route::get('/dashboard', function () { return view('user.dashboard.index'); })->name('dashboard');
+    Route::get('/notifications', [DashboardController::class, 'notifications'])->name('dashboard.notifications');
+    Route::get('/referral', [DashboardController::class, 'referral'])->name('dashboard.referral');
     Route::resource('wallet', WalletController::class)->middleware('auth'); 
     Route::resource('tasks', TaskController::class);
     Route::get('/task/history', [TaskController::class, 'history'])->name('task.history');
     Route::resource('profile', ProfileController::class);
     Route::resource('kyc', KycController::class);
     Route::resource('withdraw', WithdrawController::class);
+    Route::get('/withdraw-history', [WithdrawController::class, 'history'])->name('withdraw.history');
+    Route::get('/support', [SupportController::class, 'index'])->name('support.index');
 });
 
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
-    Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])
-        ->name('dashboard');
-
+    Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
-
     Route::resource('creators', \App\Http\Controllers\Admin\CreatorController::class);
 
 });

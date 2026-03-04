@@ -62,4 +62,12 @@ class WithdrawController extends Controller
     {
         //
     }
+
+
+    public function history()
+    {
+        // Future: Fetch user withdrawal history
+        // $withdrawals = Auth::user()->withdrawals()->latest()->get();
+        return view('user.withdraw.history');
+    }
 }

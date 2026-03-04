@@ -118,6 +118,17 @@
                 </svg>
                 <span class="font-semibold">Profile</span>
             </a>
+            <a href="{{ route('user.support.index') }}"
+               class="sidebar-link group flex items-center gap-3 px-4 py-3 rounded-xl transition-all
+               {{ request()->routeIs('user.support.*')
+                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/30'
+                    : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600' }}">
+               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M18 10c0-3.866-3.582-7-8-7S2 6.134 2 10v4a2 2 0 002 2h2v-6H4a6 6 0 1112 0h-2v6h2a2 2 0 002-2v-4z"/>
+            </svg>
+                <span class="font-semibold">Support</span>
+            </a>
         </nav>
 
         <!-- Sidebar Footer -->
@@ -163,30 +174,55 @@
                <div class="flex items-center gap-4">
 
     <!-- Notifications -->
-    <button class="relative p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                  d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
-        </svg>
-        <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
-    </button>
+   <a href="{{ route('user.dashboard.notifications') }}" 
+   class="relative p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all inline-block">
 
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+              d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+    </svg>
+
+    <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+
+</a>
+
+{{-- withdraw History --}}
+ @if(request()->routeIs('user.withdraw.index'))
+ <a href="{{ route('user.withdraw.history') }}"
+   class="flex items-center gap-2 px-4 py-2 
+          text-white rounded-xl
+          bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500
+          hover:from-indigo-600 hover:via-purple-600 hover:to-pink-600
+          shadow-md hover:shadow-lg
+          transition-all duration-300">
+
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M17 9V7a4 4 0 10-8 0v2M5 9h14l1 12H4L5 9z"/>
+    </svg>
+
+    Withdraw History
+
+</a>
+    @endif
     
    {{-- Show only on Tasks pages --}}
   @if(request()->routeIs('user.tasks.*'))
-    <a href="{{ route('user.task.history') }}" 
-       class="hidden md:inline-flex items-center gap-2 bg-gradient-to-r 
-              from-indigo-600 to-purple-600 text-white px-4 py-2 rounded-xl 
-              font-semibold shadow-md hover:shadow-lg hover:scale-105 
-              transition-all text-sm">
+    <a href="{{ route('user.task.history') }}"
+   class="flex items-center gap-2 px-4 py-2 
+          bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600
+          text-white rounded-xl shadow-md
+          hover:scale-105 hover:shadow-lg
+          transition-all duration-300">
 
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/>
-        </svg>
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M12 8c-1.657 0-3 1.343-3 3v3H7l5 5 5-5h-2v-3c0-1.657-1.343-3-3-3z"/>
+    </svg>
 
-        History
-    </a>
+    Task History
+
+</a>
   @endif
 
     <!-- Wallet Quick View -->

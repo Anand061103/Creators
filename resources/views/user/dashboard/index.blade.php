@@ -324,25 +324,33 @@
             </div>
 
             <!-- Referral Card -->
-            <div class="bg-gradient-to-br from-yellow-400 via-orange-500 to-red-500 rounded-2xl shadow-xl p-6 text-white">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-black">Refer & Earn</h3>
-                        <p class="text-sm text-white/80">₹50 per friend</p>
-                    </div>
-                </div>
-                <p class="text-sm mb-4 text-white/90">
-                    Invite friends and earn ₹50 for each successful referral!
-                </p>
-                <button class="w-full bg-white text-orange-600 px-4 py-3 rounded-xl font-bold hover:bg-white/90 transition-all shadow-lg">
-                    Invite Friends
-                </button>
-            </div>
+            <a href="{{ route('user.dashboard.referral') }}"
+   class="block bg-gradient-to-br from-yellow-400 via-orange-500 to-red-500 
+          rounded-2xl shadow-xl p-6 text-white hover:scale-105 transition-all">
+
+    <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+        </div>
+
+        <div>
+            <h3 class="text-lg font-black">Refer & Earn</h3>
+            <p class="text-sm text-white/80">₹50 per friend</p>
+        </div>
+    </div>
+
+    <p class="text-sm mb-4 text-white/90">
+        Invite friends and earn ₹50 for each successful referral!
+    </p>
+
+    <div class="w-full bg-white text-orange-600 px-4 py-3 rounded-xl font-bold text-center hover:bg-white/90 transition-all shadow-lg">
+        Invite Friends
+    </div>
+
+</a>
 
         </div>
 

@@ -25,4 +25,19 @@ class DashboardController extends Controller
         
         return view('user.dashboard.index');
     }
+
+    public function notifications()
+    {
+        // Future: Fetch user notifications
+        // $notifications = Auth::user()->notifications()->latest()->get();
+        return view('user.dashboard.notifications');
+    }
+
+ public function referral()
+    {
+        // Future: Fetch user notifications
+        // $notifications = Auth::user()->notifications()->latest()->get();
+        return view('user.dashboard.referral');
+    }
+    
 }
