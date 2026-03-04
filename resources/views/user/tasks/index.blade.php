@@ -7,6 +7,9 @@
 @section('content')
 <div class="space-y-6 animate-fade-in">
 
+    
+
+   
     <!-- Stats Banner -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow-lg p-5 text-white">
@@ -22,6 +25,7 @@
                 </div>
             </div>
         </div>
+      
 
         <div class="bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl shadow-lg p-5 text-white">
             <div class="flex items-center justify-between">

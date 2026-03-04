@@ -1,20 +1,20 @@
-@php
-$today = $transactions->where('type','credit')
-    ->where('created_at','>=', now()->startOfDay())
-    ->sum('amount');
+    @php
+    $today = $transactions->where('type','credit')
+        ->where('created_at','>=', now()->startOfDay())
+        ->sum('amount');
 
-$week = $transactions->where('type','credit')
-    ->where('created_at','>=', now()->startOfWeek())
-    ->sum('amount');
+    $week = $transactions->where('type','credit')
+        ->where('created_at','>=', now()->startOfWeek())
+        ->sum('amount');
 
-$month = $transactions->where('type','credit')
-    ->where('created_at','>=', now()->startOfMonth())
-    ->sum('amount');
+    $month = $transactions->where('type','credit')
+        ->where('created_at','>=', now()->startOfMonth())
+        ->sum('amount');
 
-$pending = $transactions->where('status','pending')->sum('amount');
-@endphp
+    $pending = $transactions->where('status','pending')->sum('amount');
+    @endphp
 
-@extends('layout.user.app')
+    @extends('layout.user.app')
 
 @section('title', 'My Wallet')
 @section('page-title', 'My Wallet')

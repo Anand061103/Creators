@@ -62,4 +62,10 @@ class TaskController extends Controller
     {
         //
     }
+
+    public function history()
+    {
+        return view('user.tasks.history');
+    }
+
 }
