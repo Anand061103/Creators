@@ -14,6 +14,9 @@ use App\Http\Controllers\User\WalletController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\WithdrawController;
 
+
+
+
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.store');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -40,8 +43,16 @@ Route::resource('wallet', WalletController::class)->middleware('auth');    Route
 });
 
 
+Route::prefix('admin')->name('admin.')->group(function () {
 
+    Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])
+        ->name('dashboard');
 
+    Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
+
+    Route::resource('creators', \App\Http\Controllers\Admin\CreatorController::class);
+
+});
 
 
 
